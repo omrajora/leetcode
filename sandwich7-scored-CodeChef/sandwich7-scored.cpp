@@ -4,7 +4,7 @@ using namespace std;
 int main() {
 int b,h,c;
 cin>>b>>h>>c;
-cout<<max(b/2,h+c);
+cout<<min(b/2,h+c);
 
 }
 
