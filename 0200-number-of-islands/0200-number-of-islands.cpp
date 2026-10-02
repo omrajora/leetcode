@@ -1,30 +1,47 @@
 class Solution {
 public:
-void dfs(vector<vector<char>>& grid, int i, int j) {
-if (i < 0 || i >= grid.size() ||
-    j < 0 || j >= grid[0].size() ||
-    grid[i][j] == '0') {
-    return;
+void bfs(int row,int col,vector<vector<int>>&vis,vector<vector<char>>&grid){
+    int n=grid.size();
+     int m=grid[0].size();
+    vis[row][col]=1;
+    queue<pair<int,int>>q;
+    q.push({row,col});
+    while(!q.empty()){
+        int row=q.front().first;
+        int col=q.front().second;
+        q.pop();
+
+        // Only 4 directions: up, down, left, right
+        int delrow[] = {-1, 1, 0, 0};
+        int delcol[] = {0, 0, -1, 1};
+
+        //traverse the neighbour and mark them
+          for (int k = 0; k < 4; k++) {
+                int nrow = row + delrow[k];
+                int ncol = col + delcol[k];
+               
+                if(nrow>= 0 && nrow<n && ncol>=0 && ncol<m &&grid[nrow][ncol]=='1'&& !vis[nrow][ncol]){
+                    vis[nrow][ncol]=1;
+                    q.push({nrow,ncol});
+                }
+        }
     }
-    grid[i][j]='0';// ye mark visited k liye
-      dfs(grid, i-1, j); // up
-    dfs(grid, i+1, j); // down
-    dfs(grid, i, j-1); // left
-    dfs(grid, i, j+1); // right
 
 }
     int numIslands(vector<vector<char>>& grid) {
-        int count=0;
-        for(int i=0;i<grid.size();i++){
-            for(int j=0;j<grid[0].size();j++){
-            if(grid[i][j]=='1'){
-                count++;
-            dfs(grid,i,j);
+     int n=grid.size();
+     int m=grid[0].size();
+         vector<vector<int>> vis(n,vector<int>(m,0));
+         int cnt=0;
+         for(int row=0;row<n;row++){
+            for(int col=0;col<m;col++){
+                if(!vis[row][col] && grid[row][col]=='1'){
+                    cnt++;
+                    bfs(row,col,vis,grid);
+                }
             }
-            }
-        }
-        return count;
-        
+         }
+         return cnt;
     }
 };
 
