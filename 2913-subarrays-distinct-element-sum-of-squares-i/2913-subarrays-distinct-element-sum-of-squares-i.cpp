@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int sumCounts(vector<int>& nums) {
+        int n=nums.size();
+        int ans=0;
+        for(int i=0;i<n;i++){
+            set<int> st;
+           for(int j=i; j<n; j++){
+             st.insert(nums[j]);
+ans += st.size() * st.size();
+            }
+        }
+        return ans;
+    }
+};
+
+// Synced seamlessly with LeetHub Pro
+// Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
